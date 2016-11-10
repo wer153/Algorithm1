@@ -1,0 +1,32 @@
+#include<iostream>
+#include<ctime>
+#include<cstdlib>
+using namespace std;
+void seqsearch(int n, const int s[], int x, int& location)
+{
+	location = 1;
+	while(location < n && s[location] != x)
+		location++;
+	if(location >= n)
+		location = 0;
+}
+int main()
+{
+	srand(time(NULL));
+
+	int s[100001];
+	for(int i=1; i<=100000;i++)
+		s[i] = i;
+	int location;
+	cout<<"n:100000,"<<endl;
+
+	time_t start,finish;
+	start = clock();
+	for(int i=0;i<10000;i++)
+	{
+		seqsearch(100000,s,rand()%100000,location);
+		
+	}
+	finish = clock();
+	cout<<"runtime :"<<(finish-start)/10000.0<<endl;
+}
