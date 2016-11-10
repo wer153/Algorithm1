@@ -1,0 +1,66 @@
+#include<iostream>
+#include<algorithm>
+#include<cmath>
+using namespace std;
+void Merge(int h,int m, const int u[], const int v[], int s[])
+{
+	
+	int i=1, j=1, k=1;
+	while(i<=h && j<=m)
+	{
+		if(u[i]<v[j])
+		{
+			s[k] = u[i];
+			i++;
+		}else
+		{
+			s[k] = v[j];
+			j++;
+		}
+		k++;
+	}
+
+	if(i>h)
+		copy(v+j,v+m+1,s+k);
+	else
+		copy(u+i,u+h+1,s+k);
+
+}
+void mergesort(int n, int s[])
+{
+	if(n>1)
+	{
+		const int h = n/2, m = n - h;
+		int u[h], v[m];
+
+		copy(s+1,s+h+1,u+1);
+		copy(s+h+1,s+n+1,v+1);
+
+		mergesort(h,u);
+		mergesort(m,v);
+		Merge(h,m,u,v,s);
+	}
+}
+int main()
+{
+	int N=100000;
+	
+	srand(time(NULL));
+
+	int s[N+1];
+	int location;
+	cout<<"n:"<<N<<endl;
+
+	time_t start,finish;
+	start = clock();
+	for(int i=0;i<10;i++)
+	{
+		for(int j=1; j<=N;j++)
+			s[j] = rand()%N;
+		mergesort(N,s);
+	}
+	finish = clock();
+	cout<<"runtime :"<<(finish-start)/10.0<<endl;
+	
+}
+
