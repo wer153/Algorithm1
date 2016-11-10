@@ -1,0 +1,20 @@
+#include<iostream>
+using namespace std;
+int fib(int n)
+{
+	if(n<=1)
+		return n;
+	else
+		return fib(n-1) + fib(n-2);
+}
+int main()
+{
+	cout<<"n:50"<<endl;
+	time_t start,finish;
+	start = clock();
+	{
+		fib(50);
+	}
+	finish = clock();
+	cout<<"runtime :"<<(finish-start)/10.0<<endl;
+}
