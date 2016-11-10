@@ -1,0 +1,57 @@
+#include<iostream>
+#include<cstdlib>
+using namespace std;
+void exchange(int &num1, int &num2)
+{
+	int tmp = num1;
+	num1 = num2;
+	num2 = tmp;
+}
+void partition(int* s, int low, int high, int& pivotpoint)
+{
+	int i,j;
+	int pivotitem;
+
+	pivotitem = s[low];
+	j = low;
+	for(int i=low+1; i<=high; i++)
+		if(s[i]<pivotitem)
+		{
+			j++;
+			exchange(s[i],s[j]);
+		}
+	pivotpoint = j;
+	exchange(s[low],s[pivotpoint]);
+}
+
+void quicksort(int* s,int low, int high)
+{
+	int pivotpoint;
+	if(high>low)
+	{
+		partition(s, low, high, pivotpoint);
+		quicksort(s, low, pivotpoint-1);
+		quicksort(s, pivotpoint+1, high);
+	}
+}
+int main()
+{
+	int N=10;
+	
+	srand(time(NULL));
+
+	int s[N+1];
+	int location;
+	cout<<"n:"<<N<<endl;
+
+	time_t start,finish;
+	start = clock();
+	for(int i=0;i<100000;i++)
+	{
+		for(int j=1; j<=N;j++)
+			s[j] = rand()%N;
+		quicksort(s,1,N);
+	}
+	finish = clock();
+	cout<<"runtime :"<<(finish-start)/100000.0<<endl;
+}
